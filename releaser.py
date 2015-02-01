@@ -11,7 +11,7 @@ import threading
 import sys
 
 class releaser:
-    RELEASE_MSG = "Release\r\n\r\nRelease"
+    RELEASE_MSG = "Release"
     debug = False
     CHECK_FREQUENCE = 600
     WHITE_LIST_UPDATE_FREQUENCE = 7200
@@ -78,11 +78,11 @@ class releaser:
     def release_email(self, addr):
         if self.debug:
             addr = "kwang3@wpi.edu"
-            self.RELEASE_MSG = "Release\r\n\r\n" + addr
+            self.RELEASE_MSG = 'From: "cssa@wpi.edu" <cssa@wpi.edu>\r\nTo: "' + addr + '" <'+ addr +'>\r\nRelease\r\n\r\n' + addr
         s_s = smtplib.SMTP(self.smtp_server)
         s_s.login(self.account, self.pswd)
         sender = self.account + "@" + self.smtp_server.split(".")[-2] + "." + self.smtp_server.split(".")[-1]
-        s_s.sendmail(sender, addr, self.RELEASE_MSG)
+        s_s.sendmail(sender, addr, 'From: "cssa@wpi.edu" <cssa@wpi.edu>\r\nTo: "' + addr + '" <'+ addr +'>\r\nRelease\r\n\r\n' + self.RELEASE_MSG)
         s_s.close()
 
     def log(self, logdata):
