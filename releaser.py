@@ -12,7 +12,7 @@ import sys
 
 class releaser:
     RELEASE_MSG = "Release"
-    debug = False
+    debug = True
     CHECK_FREQUENCE = 600
     WHITE_LIST_UPDATE_FREQUENCE = 7200
     def __init__(self, account, pswd, imap_server, smtp_server):
@@ -27,6 +27,7 @@ class releaser:
             wf = open("white_list.txt")
             self.whitelist = wf.read().splitlines()
             wf.close()
+            self.log("WhiteList Refreshed")
         except:
             self.whitelist = []
             self.log("Read White List File Error: " + sys.exc_info()[0])
@@ -57,7 +58,7 @@ class releaser:
                 print e_readdr
             else: continue
             for sender in self.whitelist:
-                if len(re.findall(sender, e_sender))>0:
+                if len(re.findall(sender, e_sender, re.IGNORECASE))>0:
                     self.release_email(e_readdr)
                     typ = i_s.store(mail_no, "+FLAGS", "\\Deleted")
                     if re.match("ok", typ[0], re.IGNORECASE) is not None:
