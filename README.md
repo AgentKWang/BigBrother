@@ -14,5 +14,5 @@
 2. Create an input file to indicate the mail list account, password, imap and smtp server. I will give a sample in this reporsitory.
 3. Create your whitelist.txt file. It uses python's regex to match. An example is also included.
 3. Use nohup to run the python script so it won't be terminated after you logged out the server.
-    nohup python releaser.py input.txt &
+    nohup python releaser.py < input.txt >log.txt 2>&1 &
 4. To-da! The emails will be automatically released now! Good luck!
